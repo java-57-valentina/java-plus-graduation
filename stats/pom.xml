@@ -7,7 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>stats-server</artifactId>
+    <artifactId>stats</artifactId>
     <packaging>pom</packaging>
 
     <name>stats-server</name>
@@ -15,11 +15,7 @@
     <modules>
         <module>stats-client</module>
         <module>stats-dto</module>
-        <module>stats-service</module>
+        <module>stats-server</module>
     </modules>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
 </project>
