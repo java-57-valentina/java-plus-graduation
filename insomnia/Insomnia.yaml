@@ -1,0 +1,2120 @@
+type: collection.insomnia.rest/5.0
+name: EWM
+meta:
+  id: wrk_4ef77a0aae644fe7ae62d96694e70cd9
+  created: 1754501138101
+  modified: 1754501138101
+  description: ""
+collection:
+  - name: Stats
+    meta:
+      id: fld_00463f43894a4248ba0933dcca29bd36
+      created: 1753260127602
+      modified: 1753260127602
+      sortKey: -1753260127602
+      description: ""
+    children:
+      - url: localhost:9090/hit
+        name: hit
+        meta:
+          id: req_432f2a9b17024be48961e1124d3b68fe
+          created: 1753260130873
+          modified: 1753266143229
+          isPrivate: false
+          description: ""
+          sortKey: -1753260130873
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "app": "ewm-main-service",
+              "uri": "/efd/24",
+              "ip": "192.163.0.1",
+              "timestamp": "2022-11-06 11:00:23"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05
+          00:00:00&uris=/events&unique=false
+        name: get
+        meta:
+          id: req_040d82cc41dc4cc5821762256d0565d3
+          created: 1753266148259
+          modified: 1754668020961
+          isPrivate: false
+          description: ""
+          sortKey: -1752613974090
+        method: GET
+        parameters:
+          - name: start
+            value: 2020-05-05 00:00:00
+            disabled: false
+            id: pair_1936c4622006483ba37250b0562140cd
+          - name: end
+            value: 2035-05-05 00:00:00
+            disabled: false
+            id: pair_9c58048c42924445bd4a97489ebc0264
+          - name: uris
+            value: /docs,/users
+            disabled: false
+            id: pair_121214ac356e4419b5fc48d8da2d1651
+          - name: unique
+            value: "true"
+            disabled: false
+            id: pair_b8ca3df6234c4706b5a817625faefeb3
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:9090/stats
+        name: get (1)
+        meta:
+          id: req_c616db70b0214269af2e955111701356
+          created: 1754668029805
+          modified: 1754668084318
+          isPrivate: false
+          description: ""
+          sortKey: -1747860849869
+        method: GET
+        parameters:
+          - name: start
+            value: 2020-05-05 00:00:00
+            disabled: false
+            id: pair_1936c4622006483ba37250b0562140cd
+          - name: end
+            value: 2035-05-05 00:00:00
+            disabled: false
+            id: pair_9c58048c42924445bd4a97489ebc0264
+          - name: uris
+            value: /docs,/users
+            disabled: true
+            id: pair_121214ac356e4419b5fc48d8da2d1651
+          - name: unique
+            value: "true"
+            disabled: true
+            id: pair_b8ca3df6234c4706b5a817625faefeb3
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: Categories
+    meta:
+      id: fld_47483cdc5f414e08974b3c3909276112
+      created: 1753778948157
+      modified: 1753778948157
+      sortKey: -1753778948157
+      description: ""
+    children:
+      - url: localhost:8080/admin/categories/3
+        name: Update
+        meta:
+          id: req_2b5fa6e9207b4b5eb5ab235eee4c5da3
+          created: 1753781804851
+          modified: 1753794144237
+          isPrivate: false
+          description: ""
+          sortKey: -1753519541678.5
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "ololo"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/categories
+        name: Get all
+        meta:
+          id: req_01c2a11a87204f8389e272f7fd1231b5
+          created: 1753781966170
+          modified: 1753782054178
+          isPrivate: false
+          description: ""
+          sortKey: -1753649247081.25
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Kids"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/categories/4
+        name: Get one
+        meta:
+          id: req_06d5f71b3b2840a885cbda81caa0e2ee
+          created: 1753782068715
+          modified: 1753782078472
+          isPrivate: false
+          description: ""
+          sortKey: -1753584394379.875
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Kids"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/categories/3
+        name: Delete
+        meta:
+          id: req_f99c253393744d58830140b6dd4d0bd2
+          created: 1753782183397
+          modified: 1753782196721
+          isPrivate: false
+          description: ""
+          sortKey: -1753519541578.5
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: Users
+    meta:
+      id: fld_e60f17f2c0e84e82b8ddcfdeca40f684
+      created: 1753815501472
+      modified: 1754472298432
+      sortKey: -1754465760817
+      description: ""
+    children:
+      - url: localhost:8080/admin/users
+        name: Get all
+        meta:
+          id: req_aa4e5d8705344b53a3a5c51a5143443b
+          created: 1753875556624
+          modified: 1753995444747
+          isPrivate: false
+          description: ""
+          sortKey: -1753797228837
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: Events
+    meta:
+      id: fld_89a864e46c82422db0be586b07a79c8c
+      created: 1753875301011
+      modified: 1753875301011
+      sortKey: -1753519537879.5
+      description: ""
+    children:
+      - name: Admin
+        meta:
+          id: fld_dcacfd8950fc40f9a9f82505a33cb1ae
+          created: 1753946434270
+          modified: 1753946454860
+          sortKey: -1753946434271
+          description: ""
+        children:
+          - url: localhost:8080/admin/events/1
+            name: "Admin: REJECT"
+            meta:
+              id: req_5f19d24ca6bd4328940aafec7997fff4
+              created: 1753946398901
+              modified: 1753946845943
+              isPrivate: false
+              description: ""
+              sortKey: -1753946444711
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "REJECT_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/1
+            name: "Admin: update time"
+            meta:
+              id: req_67cb94425a134dafb34286b10156d88d
+              created: 1753950944473
+              modified: 1753959429807
+              isPrivate: false
+              description: ""
+              sortKey: -1753938277733.375
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"eventDate": "2025-07-31 11:51:00"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/admin/events
+            name: "Admin: Get all"
+            meta:
+              id: req_ee91f50062904708bc67804a1cbdcb17
+              created: 1753959424112
+              modified: 1754641793895
+              isPrivate: false
+              description: ""
+              sortKey: -1753930110855.75
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/admin/events
+            name: "Admin: DELETE"
+            meta:
+              id: req_e8cd713ac1ca4bab8d86a0a9f00bf148
+              created: 1754497316843
+              modified: 1754497316843
+              isPrivate: false
+              description: ""
+              sortKey: -1753905610222.875
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/2
+            name: "Admin: PUBLISH"
+            meta:
+              id: req_9b3599d0de524cd29a64251e532f6f63
+              created: 1754497323459
+              modified: 1754497323459
+              isPrivate: false
+              description: ""
+              sortKey: -1753942361172.1875
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "PUBLISH_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+      - url: http://localhost:8080/events
+        name: "Public: Get all"
+        meta:
+          id: req_57a73d83b0b840c3bcda929c425f0e13
+          created: 1753875301013
+          modified: 1754572174150
+          isPrivate: false
+          description: ""
+          sortKey: -1753649247081.25
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/events/7
+        name: "Public: Get one"
+        meta:
+          id: req_01382852df5d4502a12f04b5420fbccb
+          created: 1753875301014
+          modified: 1754641782686
+          isPrivate: false
+          description: ""
+          sortKey: -1753681673431.9375
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Kids"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/categories/3
+        name: Delete
+        meta:
+          id: req_caee351766ab460080f62dfcabbce027
+          created: 1753875301014
+          modified: 1753875301014
+          isPrivate: false
+          description: ""
+          sortKey: -1753519541578.5
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/events/1
+        name: Update my
+        meta:
+          id: req_2b18b85c365a4c08bbd1e502c9e8c415
+          created: 1753878403792
+          modified: 1753950896052
+          isPrivate: false
+          description: ""
+          sortKey: -1753714099782.625
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"eventDate": "2025-07-31 12:51:00"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/events/1
+        name: Get my
+        meta:
+          id: req_d257259a6852451db1078497b1232739
+          created: 1753897765919
+          modified: 1753995900622
+          isPrivate: false
+          description: ""
+          sortKey: -1753551968029.1875
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Kids"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/events?lat=53.9543963564757&lon=27.66704232699713&radius=10
+        name: "Public: search"
+        meta:
+          id: req_e89e6dbbbd5842b4b9b7f4ff92ac47c8
+          created: 1754572162225
+          modified: 1754573408774
+          isPrivate: false
+          description: ""
+          sortKey: -1753616820730.5625
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/events
+        name: Create
+        meta:
+          id: req_c6ad17daa340493e98770321350ece21
+          created: 1754645564871
+          modified: 1754645577287
+          isPrivate: false
+          description: ""
+          sortKey: -1753535754853.8438
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+                "annotation": "Quidem reiciendis nam velit voluptatum et voluptatum odio enim quia. Nulla minima nobis sit aut voluptatem velit neque. Eius sed veniam repellat tenetur magni laborum dolores qui error.",
+                "description": "Possimus id placeat non nam odit expedita. Ut sapiente vel earum ex numquam sunt. Sunt iste consequatur facilis doloribus qui velit. Nisi voluptate maiores numquam. Quod similique consequatur reiciendis nobis. Quae dignissimos molestiae non eius saepe inventore impedit.\n \rDeserunt labore soluta accusamus. Quia et aut sed sit illo. Rerum quos molestiae delectus ipsam in. Nulla optio eius qui praesentium voluptatem aut iure at quo.\n \rVoluptatem quis autem molestiae est unde est voluptatem. Suscipit quas dolorem quo perspiciatis voluptates. Illo temporibus id reiciendis. Tempore eos harum suscipit ut veniam voluptatum laudantium et odio. Dolore eum voluptas ut provident est sed. Est iusto molestiae deleniti non et sit.",
+                "eventDate": "2025-08-08 17:31:47",
+                "location":
+                {
+                    "lat": -20.9812,
+                    "lon": 72.3497
+                },
+                "paid": "true",
+                "participantLimit": "267",
+                "requestModeration": "false",
+                "title": "Possimus nam provident quia quia inventore beatae deleniti eveniet provident."
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: Requests
+    meta:
+      id: fld_8626a0baa63142b889029f9a1d5dc6f4
+      created: 1753991805838
+      modified: 1753991805838
+      sortKey: -1753991805838
+      description: ""
+    children:
+      - url: localhost:8080/users/1/events/1/requests
+        name: Get requests for my event
+        meta:
+          id: req_5f2b439bb9ad4f108edf63b7ae841b79
+          created: 1753977839811
+          modified: 1753995686501
+          isPrivate: false
+          description: ""
+          sortKey: -1753991811087
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Kids"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/128/requests
+        name: Get my requests
+        meta:
+          id: req_759acb3be9ee4f19a913fa1d2f73eb5c
+          created: 1753977948639
+          modified: 1753991811024
+          isPrivate: false
+          description: ""
+          sortKey: -1753991810987
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Kids"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/4/requests?eventId=2
+        name: Create request
+        meta:
+          id: req_df7a7cb4960941e6ac6c3081d57d279c
+          created: 1753995523936
+          modified: 1753995641736
+          isPrivate: false
+          description: ""
+          sortKey: -1753995523936
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/events/1/requests
+        name: Confirm request
+        meta:
+          id: req_aff91104d8584321b8017dc17f159dc5
+          created: 1753995751063
+          modified: 1753995839659
+          isPrivate: false
+          description: ""
+          sortKey: -1753993667511.5
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "requestIds": [
+                2
+              ],
+              "status": "CONFIRMED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: Locations
+    meta:
+      id: fld_5e2e7782b14644b7b5a9152aeb5b56f5
+      created: 1754465760717
+      modified: 1754500441301
+      sortKey: -1754465760717
+      description: ""
+    children:
+      - name: Update
+        meta:
+          id: fld_2a0856f2b26c4549930eb86c678d1d03
+          created: 1754637788380
+          modified: 1754637788380
+          sortKey: -1754637788380
+          description: ""
+        children:
+          - url: localhost:8080/users/139/locations
+            name: Update by creator
+            meta:
+              id: req_cece5a88722d4f66a9f363c8f97cb481
+              created: 1754637791758
+              modified: 1754637820432
+              isPrivate: false
+              description: ""
+              sortKey: -1754637791758
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: "{ }"
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - url: localhost:8080/admin/locations
+        name: Get all by admin
+        meta:
+          id: req_98ba6dbc8d8e4b918c26e2cb123967d0
+          created: 1754466621850
+          modified: 1754497262885
+          isPrivate: false
+          description: ""
+          sortKey: -1754230643955
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/locations?lat=88&lon=11
+        name: Find
+        meta:
+          id: req_39a650e920704281b59d69a7d1117188
+          created: 1754466755018
+          modified: 1754466772005
+          isPrivate: false
+          description: ""
+          sortKey: -1754113083945.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/locations/3
+        name: Delete by admin
+        meta:
+          id: req_00dffb1cac6341bfa498b8e52d4f22e4
+          created: 1754467888007
+          modified: 1754570746001
+          isPrivate: false
+          description: ""
+          sortKey: -1754024913938.375
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/locations/distance/6/7
+        name: Distance
+        meta:
+          id: req_a03900d779d047e8a9f4086d9c416904
+          created: 1754477119424
+          modified: 1754477443924
+          isPrivate: false
+          description: ""
+          sortKey: -1754083693943.125
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/locations/4
+        name: Delete by user
+        meta:
+          id: req_f3e3e1b879f04910a6158074346ab0aa
+          created: 1754485275982
+          modified: 1754513139503
+          isPrivate: false
+          description: ""
+          sortKey: -1754010218937.1875
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/locations
+        name: Get all by user
+        meta:
+          id: req_a11c292c83134027911d1dccad39b408
+          created: 1754485452429
+          modified: 1754512824559
+          isPrivate: false
+          description: ""
+          sortKey: -1754171863950.25
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/locations
+        name: Get all PUBLIC
+        meta:
+          id: req_99821f741b25407ab2fbc8fd4b25003a
+          created: 1754497271324
+          modified: 1754497277972
+          isPrivate: false
+          description: ""
+          sortKey: -1754142473947.875
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/locations/5
+        name: Update location by admin
+        meta:
+          id: req_170f7411f776406db489ebba7fa24537
+          created: 1754512942290
+          modified: 1754513039589
+          isPrivate: false
+          description: ""
+          sortKey: -1754054303940.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"address": "ул. Авиационная 3, Копище, Минская область"
+            	}
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/1/locations/5
+        name: Update location by user
+        meta:
+          id: req_34f29cb85c924c23b5479c3cdd83f4ee
+          created: 1754513305651
+          modified: 1754513311905
+          isPrivate: false
+          description: ""
+          sortKey: -1754039608939.5625
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"address": "ул. Авиационная 3, Копище, Минская область"
+            	}
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/admin/locations?user=0
+        name: Search by admin
+        meta:
+          id: req_218d538577dc4566939145879daae852
+          created: 1754545592875
+          modified: 1754565544616
+          isPrivate: false
+          description: ""
+          sortKey: -1754201253952.625
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/users/3/locations?state=APPROVED
+        name: Search by user
+        meta:
+          id: req_6a16248ad9cd432ca12a9f18bd7a7a77
+          created: 1754568449032
+          modified: 1754569808735
+          isPrivate: false
+          description: ""
+          sortKey: -1754186558951.4375
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/locations?text=йога
+        name: Search public
+        meta:
+          id: req_b129b4ec581640c491300fe4962dfc4e
+          created: 1754569183015
+          modified: 1754569512495
+          isPrivate: false
+          description: ""
+          sortKey: -1754179211450.8438
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/locations/1
+        name: Get one PUBLIC
+        meta:
+          id: req_16c931d9ea8942d694b45bb00a2b598a
+          created: 1754574152139
+          modified: 1754574163988
+          isPrivate: false
+          description: ""
+          sortKey: -1754127778946.6875
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        scripts:
+          preRequest: ""
+          afterResponse: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: ✳️ Setup
+    meta:
+      id: fld_32816887acc54a5f9815158aa921cdba
+      created: 1754472376078
+      modified: 1754501303229
+      sortKey: -1754472376278
+      description: ""
+    children:
+      - name: Events
+        meta:
+          id: fld_0831b34a44fa426b8c7425f44f0ff5af
+          created: 1753881104345
+          modified: 1754486359511
+          sortKey: -1754486196743.5
+          description: ""
+        children:
+          - url: localhost:8080/users/1/events
+            name: Сплав на байдарках
+            meta:
+              id: req_3d6e82e623634bf8a5d33367f508be17
+              created: 1753875301012
+              modified: 1754487680933
+              isPrivate: false
+              description: ""
+              sortKey: -1753881109590
+            method: POST
+            body:
+              mimeType: application/json
+              text: >-
+                {
+                	"title": "Сплав на байдарках",
+                  "annotation": "Сплав на байдарках похож на полет.",
+                  "category": 1,
+                  "description": "Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.",
+                  "eventDate": "2025-08-20 15:00:00",
+                  "location": {
+                    "lat": 55.754167,
+                    "lon": 37.62
+                  },
+                  "paid": true,
+                  "participantLimit": 10,
+                  "requestModeration": false
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/1
+            name: "Admin: PUBLISH"
+            meta:
+              id: req_a9b92d07907646c8b216ffc05f5def6d
+              created: 1753875301013
+              modified: 1754497357599
+              isPrivate: false
+              description: ""
+              sortKey: -1753869833750.9375
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "PUBLISH_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/1/events
+            name: Полет в аэротрубе
+            meta:
+              id: req_8540c3d3490c400dae2098a6271c3c0a
+              created: 1753881170121
+              modified: 1754500155232
+              isPrivate: false
+              description: ""
+              sortKey: -1753881109540
+            method: POST
+            body:
+              mimeType: application/json
+              text: >-
+                {
+                  "title": "Полет в аэротрубе",
+                  "annotation": "Ощутите невесомость и адреналин свободного падения!",
+                  "category": 1,
+                  "description": "Полет в аэротрубе — это максимально реалистичная имитация свободного падения. Под руководством опытного инструктора вы научитесь контролировать свое тело в воздушном потоке, выполнять трюки и почувствуете себя настоящим парашютистом. Безопасно, захватывающе и доступно даже для новичков!",
+                  "eventDate": "2025-09-15 14:30:00",
+                  "location": {
+                    "lat": 55.790776,
+                    "lon": 37.558246
+                  },
+                  "paid": true,
+                  "participantLimit": 6,
+                  "requestModeration": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/2/events
+            name: Роупджампинг
+            meta:
+              id: req_fde50cb912c7481b8bedbe2b39506c08
+              created: 1753881174623
+              modified: 1754500165255
+              isPrivate: false
+              description: ""
+              sortKey: -1753875984179.0625
+            method: POST
+            body:
+              mimeType: application/json
+              text: >-
+                {
+                  "title": "Роупджампинг: прыжок с 30 метров",
+                  "annotation": "Адреналиновый прыжок с высоты 30 метров с надежной страховкой!",
+                  "category": 1,
+                  "description": "Испытайте незабываемые ощущения свободного падения! Прыжок выполняется с платформы высотой 30 метров с альпинистской страховкой. Все участники проходят обязательный инструктаж и получают профессиональное снаряжение. Требуется предварительная запись и медицинская справка об отсутствии противопоказаний.",
+                  "eventDate": "2025-09-20 12:00:00",
+                  "location": {
+                		"id": 6
+                  },
+                  "paid": true,
+                  "participantLimit": 0,
+                  "requestModeration": false
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/1/events
+            name: Лепка из глины
+            meta:
+              id: req_a78658feaf3841239071f422be782128
+              created: 1753881176003
+              modified: 1754497901690
+              isPrivate: false
+              description: ""
+              sortKey: -1753870858818.125
+            method: POST
+            body:
+              mimeType: application/json
+              text: >-
+                {
+                  "title": "Мастер-класс по лепке из глины",
+                  "annotation": "Погрузитесь в мир керамики и создайте свое первое изделие!",
+                  "category": 3,
+                  "description": "На мастер-классе вы освоите базовые техники работы с глиной, слепите собственное изделие (вазу, чашку или фигурку) и узнаете о процессе обжига. Все материалы предоставляются. Подходит для взрослых и детей от 10 лет. Готовые работы можно забрать через неделю после обжига.",
+                  "eventDate": "2025-10-05 18:00:00",
+                  "location": {
+                		"id": 3
+                  },
+                  "paid": true,
+                  "participantLimit": 8,
+                  "requestModeration": false
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/2
+            name: "Admin: PUBLISH"
+            meta:
+              id: req_8ec03d5bd8114374a776c23876bb433d
+              created: 1754497368158
+              modified: 1754497385270
+              isPrivate: false
+              description: ""
+              sortKey: -1753833531293.9688
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "PUBLISH_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/3
+            name: "Admin: PUBLISH"
+            meta:
+              id: req_d926499653f040c7939975e6f27f8e74
+              created: 1754497370049
+              modified: 1754498033945
+              isPrivate: false
+              description: ""
+              sortKey: -1753815380065.4844
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "PUBLISH_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/1/events
+            name: Кулинарный мастер-класс
+            meta:
+              id: req_f6998b1702a441129bc7e30f7e0ee496
+              created: 1754563744348
+              modified: 1754563876986
+              isPrivate: false
+              description: ""
+              sortKey: -1753870346284.5312
+            method: POST
+            body:
+              mimeType: application/json
+              text: >-
+                {
+                  "title": "Кулинарный мастер-класс - рождественские пряники",
+                  "annotation": "Окунитесь в праздничную атмосферу и создайте ароматные рождественские пряники своими руками!",
+                  "category": 3,
+                  "description": "На мастер-классе вы научитесь готовить традиционное пряничное тесто, освоите технику вырезания фигурок, а также узнаете секреты росписи пряников глазурью. Все ингредиенты и инструменты предоставляются. Подходит для взрослых и детей от 8 лет. Готовые пряники можно забрать с собой и порадовать близких вкусным подарком.",
+                  "eventDate": "2025-12-15 16:00:00",
+                  "location": {
+                    "id": 3
+                  },
+                  "paid": true,
+                  "participantLimit": 10,
+                  "requestModeration": false
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/4
+            name: "Admin: PUBLISH"
+            meta:
+              id: req_03a973f2e65841c4be422c7ec1f52588
+              created: 1754564072588
+              modified: 1754564107176
+              isPrivate: false
+              description: ""
+              sortKey: -1753806304451.2422
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "PUBLISH_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/events/5
+            name: "Admin: PUBLISH"
+            meta:
+              id: req_540967fa9e9141f685224b60b059bf44
+              created: 1754564110663
+              modified: 1754564116935
+              isPrivate: false
+              description: ""
+              sortKey: -1753801766644.121
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"stateAction": "PUBLISH_EVENT"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+      - name: Users
+        meta:
+          id: fld_b5bb4e2764ff4f42bdebe6d42b50ddac
+          created: 1754486196556
+          modified: 1754486242651
+          sortKey: -1754486196756
+          description: ""
+        children:
+          - url: localhost:8080/admin/users
+            name: Create Valentyna
+            meta:
+              id: req_36be0e48f06b43c4b2643b6c6b79e4fe
+              created: 1754472382815
+              modified: 1754486198943
+              isPrivate: false
+              description: ""
+              sortKey: -1754486198855
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Valentyna",
+                	"email": "valentyna@gmail.com"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/users
+            name: Create Valery
+            meta:
+              id: req_4b4c5e7a690445e6b92f7d80634854d7
+              created: 1754472404821
+              modified: 1754486201149
+              isPrivate: false
+              description: ""
+              sortKey: -1754486198955
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Valery",
+                	"email": "valery@gmail.com"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+      - name: Locations
+        meta:
+          id: fld_d5925824e40b4f2b852fb808020481d4
+          created: 1754486213331
+          modified: 1754486362606
+          sortKey: -1754486196749.75
+          description: ""
+        children:
+          - url: localhost:8080/admin/locations/3
+            name: Approve
+            meta:
+              id: req_75182908196144ba8bf14e18354b84bc
+              created: 1754467719246
+              modified: 1754500286921
+              isPrivate: false
+              description: ""
+              sortKey: -1754486233090
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"state": "APPROVED"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/locations
+            name: Create location by admin
+            meta:
+              id: req_41f67d73a51545e896fbb12b0a0a42ab
+              created: 1754471645045
+              modified: 1754512201275
+              isPrivate: false
+              description: ""
+              sortKey: -1754486267525
+            method: POST
+            body:
+              mimeType: application/json
+              text: >-
+                {
+                	"name": "Йога-клуб Air Space",
+                	"lat" : 53.95928538166386,
+                	"lon" : 27.664891986449273,
+                	"address": "Новая Боровая, ул. Братьев Райт 1, Копище, Минская область 220081"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/2/locations
+            name: Create location by user
+            meta:
+              id: req_6fc99fd550fd4644881ec65d42809de7
+              created: 1754472461334
+              modified: 1754564274126
+              isPrivate: false
+              description: ""
+              sortKey: -1754486267325
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Спортивный центр Asparagus",
+                	"lat" : 53.954753048388824,
+                	"lon" : 27.666570258148123,
+                	"address": "ул. Авиационная 3, Копище, Минская область"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/1/locations
+            name: Create location by user
+            meta:
+              id: req_3f53786e0d4743f1bcaf2992fcbca05c
+              created: 1754477181593
+              modified: 1754512210449
+              isPrivate: false
+              description: ""
+              sortKey: -1754486267375
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Детский клуб Вера и Анфиса",
+                	"lat" : 53.95439635647576,
+                	"lon" : 27.667042326997137,
+                	"address": "ул. Авиационная 3, Копище, Минская область"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/1/locations
+            name: Create location by user
+            meta:
+              id: req_604725589d4b4bb7b0c490dcc719325d
+              created: 1754477353385
+              modified: 1754512206415
+              isPrivate: false
+              description: ""
+              sortKey: -1754486267425
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Детская поликлиника",
+                	"lat" : 53.9608592405272,
+                	"lon" : 27.6666498335467,
+                	"address": "ул. Братьев Райт 6, Копище, Минская область"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/2/locations
+            name: Create location by user
+            meta:
+              id: req_18ef54603a1e495c8e12c112284f637a
+              created: 1754485255813
+              modified: 1754564268490
+              isPrivate: false
+              description: ""
+              sortKey: -1754486267350
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Ололо",
+                	"lat" : 53.9608592405272,
+                	"lon" : 27.6666498335467,
+                	"address": "ул. Братьев Райт 6, Копище, Минская область"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/users/2/locations
+            name: Create location Элеватор
+            meta:
+              id: req_7f90b506f18247b89831030e799d65ba
+              created: 1754487939314
+              modified: 1754564277151
+              isPrivate: false
+              description: ""
+              sortKey: -1754486233190
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Прыжки с веревкой NRJ",
+                	"lat" : 53.97269909089215,
+                	"lon" : 27.039361274507833,
+                	"address": "г. Раков, Минская область"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/locations/5
+            name: Approve
+            meta:
+              id: req_e6cc6d297cad48b7a01f1d8ce7777810
+              created: 1754500240766
+              modified: 1754500292932
+              isPrivate: false
+              description: ""
+              sortKey: -1754486216022.5
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"state": "APPROVED"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/locations/6
+            name: Approve
+            meta:
+              id: req_cad41d07569c40458762ef8d444fe248
+              created: 1754500267861
+              modified: 1754510889034
+              isPrivate: false
+              description: ""
+              sortKey: -1754486207488.75
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"state": "APPROVED"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.4.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+      - name: Categories
+        meta:
+          id: fld_15b6a54341004a4d90c08f41a40ebfc1
+          created: 1754486282777
+          modified: 1754486282777
+          sortKey: -1754486282777
+          description: ""
+        children:
+          - url: localhost:8080/admin/categories
+            name: Create category
+            meta:
+              id: req_413f5a9515024fd394ac67155c3c1f2c
+              created: 1753778952484
+              modified: 1754486289447
+              isPrivate: false
+              description: ""
+              sortKey: -1754486289353
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Творчество"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/categories
+            name: Create category
+            meta:
+              id: req_31cd3f0bae8c44368e0c88afcf298025
+              created: 1754486153158
+              modified: 1754486294233
+              isPrivate: false
+              description: ""
+              sortKey: -1754486289553
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Спорт и активный отдых"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: localhost:8080/admin/categories
+            name: Create category
+            meta:
+              id: req_ea0733d5dda6403cade652985091140e
+              created: 1754486164043
+              modified: 1754486291717
+              isPrivate: false
+              description: ""
+              sortKey: -1754486289453
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Саморазвитие"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_d8c8b2a517df47b0bb5e100abcdee362
+    created: 1753260109521
+    modified: 1753260109521
+environments:
+  name: Base Environment
+  meta:
+    id: env_6d048fd271f74b849c3fd5e76143aeeb
+    created: 1753260109520
+    modified: 1753260109520
+    isPrivate: false
