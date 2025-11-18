@@ -2,6 +2,8 @@ package ru.practicum.ewm.event.service;
 
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +28,7 @@ import ru.practicum.ewm.participation.model.RequestsCount;
 import ru.practicum.ewm.participation.repository.ParticipationRequestRepository;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
-import ru.practicum.statsclient.StatsClient;
-import ru.practicum.statsclient.StatsClientException;
+import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.StatsDtoOut;
 
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public class EventServiceImpl implements EventService {
 
     private final LocationService locationService;
 
-    private final StatsClient statsClient;
+    private final StatsOperations statsClient;
 
 
     @Override
@@ -308,13 +309,13 @@ public class EventServiceImpl implements EventService {
             return Map.of();
 
         try {
-            stats = statsClient.getStats(
+            stats = statsClient.select(
                     LocalDateTime.now().minusYears(10),
                     LocalDateTime.now().plusYears(10),
                     ids.stream().map(id -> STATS_EVENTS_URL + id).toList(),
                     true);
-        } catch (StatsClientException ex) {
-            log.error(ex.getMessage());
+        } catch (FeignException e) {
+            log.error(e.getMessage());
         }
 
         if (stats.isEmpty())

@@ -1,6 +1,3 @@
-statsserver.url: http://stats-server:9090 # если запускаем в контейнере
-# statsserver.url: http://localhost:9090   # если запускаем на хосте
-
 server:
   port: 0
 

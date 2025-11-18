@@ -1,5 +1,6 @@
 package ru.practicum.ewm.event.controller;
 
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -26,8 +27,8 @@ import ru.practicum.ewm.event.model.EventState;
 import ru.practicum.ewm.event.service.EventService;
 import ru.practicum.ewm.exception.InvalidRequestException;
 import ru.practicum.ewm.location.model.Zone;
-import ru.practicum.statsclient.StatsClient;
-import ru.practicum.statsclient.StatsClientException;
+import ru.practicum.statsclient.StatsOperations;
+import ru.practicum.statsdto.HitDto;
 
 import static ru.practicum.ewm.constants.Constants.DATE_TIME_FORMAT;
 import static ru.practicum.ewm.constants.Constants.STATS_EVENTS_URL;
@@ -40,7 +41,7 @@ import static ru.practicum.ewm.constants.Constants.STATS_EVENTS_URL;
 public class PublicEventController {
 
     private final EventService eventService;
-    private final StatsClient statsClient;
+    private final StatsOperations statsClient;
 
     @Value("${spring.application.name:ewm}")
     private String appName;
@@ -119,9 +120,9 @@ public class PublicEventController {
     private void writeStatisticsByUris(Collection<String> uris, String ip) {
         try {
             for (String uri : uris)
-                statsClient.hit(appName, uri, ip);
+                statsClient.add(new HitDto(appName, uri, ip, LocalDateTime.now()));
 
-        } catch (StatsClientException ex) {
+        } catch (FeignException ex) {
             log.error(ex.getMessage());
         }
     }
