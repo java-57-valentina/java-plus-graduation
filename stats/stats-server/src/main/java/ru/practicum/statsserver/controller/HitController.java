@@ -8,23 +8,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.HitDto;
 import ru.practicum.statsdto.StatsDtoOut;
 import ru.practicum.statsserver.service.HitService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
-public class HitController {
+public class HitController implements StatsOperations {
 
     private final HitService hitService;
-    private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    @Override
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody @Valid HitDto hitDto) {
@@ -32,12 +33,13 @@ public class HitController {
         hitService.add(hitDto);
     }
 
+    @Override
     @GetMapping("/stats")
     @ResponseStatus(HttpStatus.OK)
     public Collection<StatsDtoOut> select(
             @RequestParam @NotNull @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime start,
             @RequestParam @NotNull @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime end,
-            @RequestParam (required = false) ArrayList<String> uris,
+            @RequestParam (required = false) List<String> uris,
             @RequestParam (defaultValue = "false") Boolean unique) {
 
         log.debug("request for statistics:");
