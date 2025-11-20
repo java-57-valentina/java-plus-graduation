@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.location.model.Zone;
 
 import java.time.LocalDateTime;

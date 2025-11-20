@@ -6,10 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.category.dto.CategoryDto;
 import ru.practicum.ewm.category.dto.CategoryDtoOut;
 import ru.practicum.ewm.event.repository.EventRepository;
-import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
+import ru.practicum.exception.NotFoundException;
 
 import java.util.Collection;
 

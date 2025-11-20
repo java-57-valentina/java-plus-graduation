@@ -10,6 +10,10 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.practicum.exception.ConditionNotMetException;
+import ru.practicum.exception.ForbiddenException;
+import ru.practicum.exception.NoAccessException;
+import ru.practicum.exception.NotFoundException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

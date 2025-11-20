@@ -1,4 +1,4 @@
-package ru.practicum.ewm.exception;
+package ru.practicum.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String entity, Long id) {

@@ -2,6 +2,7 @@ package ru.practicum.ewm.event.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.user.model.User;

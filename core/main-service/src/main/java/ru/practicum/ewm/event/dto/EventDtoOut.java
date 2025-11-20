@@ -2,8 +2,8 @@ package ru.practicum.ewm.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.category.dto.CategoryDtoOut;
-import ru.practicum.ewm.event.model.EventState;
 import ru.practicum.ewm.location.dto.LocationDtoOut;
 import ru.practicum.ewm.user.dto.UserDtoOut;
 

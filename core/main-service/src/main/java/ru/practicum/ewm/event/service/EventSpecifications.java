@@ -3,8 +3,8 @@ package ru.practicum.ewm.event.service;
 import jakarta.persistence.criteria.Expression;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
+import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.event.model.Event;
-import ru.practicum.ewm.event.model.EventState;
 import ru.practicum.ewm.location.model.Zone;
 
 import java.time.LocalDateTime;
