@@ -1,8 +1,7 @@
-package ru.practicum.ewm.exception;
+package ru.practicum.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,10 +9,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.exception.ConditionNotMetException;
-import ru.practicum.exception.ForbiddenException;
-import ru.practicum.exception.NoAccessException;
-import ru.practicum.exception.NotFoundException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -79,17 +74,6 @@ public class ErrorHandler {
                 .build();
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        return ErrorResponse.builder()
-                .message("Required parameter '" + ex.getParameterName() + "' is missing")
-                .reason("Missing parameter.")
-                .status(HttpStatus.BAD_REQUEST)
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
@@ -108,19 +92,6 @@ public class ErrorHandler {
                 .message(ex.getMessage())
                 .reason("Bad request.")
                 .status(HttpStatus.BAD_REQUEST)
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
-
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse onDataIntegrityViolationException(final DataIntegrityViolationException e) {
-        log.error("409 {}", e.getMessage());
-        return ErrorResponse.builder()
-                .message(e.getMessage())
-                .status(HttpStatus.CONFLICT)
-                .reason(Objects.requireNonNull(e.getRootCause()).getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
     }

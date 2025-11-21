@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.event.repository.EventRepository;
-import ru.practicum.ewm.exception.DuplicateLocationsException;
 import ru.practicum.ewm.location.dto.*;
 import ru.practicum.ewm.location.mapper.LocationMapper;
 import ru.practicum.ewm.location.model.*;
@@ -15,6 +14,7 @@ import ru.practicum.ewm.location.repository.LocationRepository;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.exception.ConditionNotMetException;
+import ru.practicum.exception.DuplicateLocationsException;
 import ru.practicum.exception.NoAccessException;
 import ru.practicum.exception.NotFoundException;
 

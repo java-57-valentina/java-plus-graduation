@@ -25,8 +25,8 @@ import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.event.model.EventFilter;
 import ru.practicum.ewm.event.service.EventService;
-import ru.practicum.ewm.exception.InvalidRequestException;
 import ru.practicum.ewm.location.model.Zone;
+import ru.practicum.exception.InvalidRequestException;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.HitDto;
 
