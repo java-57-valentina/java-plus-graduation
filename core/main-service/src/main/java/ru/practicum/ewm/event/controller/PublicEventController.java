@@ -7,25 +7,18 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.clients.EventApi;
-import ru.practicum.dto.event.EventDto;
+import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.event.model.EventFilter;
 import ru.practicum.ewm.event.service.EventService;
-import ru.practicum.ewm.location.model.Zone;
 import ru.practicum.exception.InvalidRequestException;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.HitDto;
@@ -37,7 +30,8 @@ import static ru.practicum.ewm.constants.Constants.STATS_EVENTS_URL;
 @Validated
 @RestController
 @RequiredArgsConstructor
-public class PublicEventController implements EventApi {
+@RequestMapping("/events")
+public class PublicEventController {
 
     private final EventService eventService;
     private final StatsOperations statsClient;
@@ -46,7 +40,7 @@ public class PublicEventController implements EventApi {
     private String appName;
 
     // Получение событий с возможностью фильтрации
-    @GetMapping("/events")
+    @GetMapping
     public Collection<EventShortDtoOut> getEvents(
             @Size(min = 3, max = 1000, message = "Текст должен быть длиной от 3 до 1000 символов")
             @RequestParam(required = false) String text,
@@ -56,8 +50,8 @@ public class PublicEventController implements EventApi {
             @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
             @RequestParam(defaultValue = "false") Boolean onlyAvailable,
             @RequestParam(required = false) Long location,
-            @RequestParam(required = false) @DecimalMin("-90.0")  @DecimalMax("90.0")  Double lat,
-            @RequestParam(required = false) @DecimalMin("-180.0") @DecimalMax("180.0") Double lon,
+//            @RequestParam(required = false) @DecimalMin("-90.0")  @DecimalMax("90.0")  Double lat,
+//            @RequestParam(required = false) @DecimalMin("-180.0") @DecimalMax("180.0") Double lon,
             @RequestParam(defaultValue = "10.0") @DecimalMin("0.0") Double radius,
             @RequestParam(defaultValue = "EVENT_DATE") String sort,
             @RequestParam(defaultValue = "0") Integer from,
@@ -80,8 +74,8 @@ public class PublicEventController implements EventApi {
 
         log.debug("request for getting events (public)");
 
-        if (lat != null && lon != null)
-            filter.setZone(new Zone(lat, lon, radius));
+//        if (lat != null && lon != null)
+//            filter.setZone(new Zone(lat, lon, radius));
 
         if (filter.getRangeStart() != null && filter.getRangeEnd() != null
                 && filter.getRangeStart().isAfter(filter.getRangeEnd())) {
@@ -100,7 +94,7 @@ public class PublicEventController implements EventApi {
         return events;
     }
 
-    @GetMapping("/events/{eventId}")
+    @GetMapping("/{eventId}")
     public EventDtoOut get(@PathVariable @Min(1) Long eventId,
                            HttpServletRequest request) {
 
@@ -124,14 +118,5 @@ public class PublicEventController implements EventApi {
         } catch (FeignException ex) {
             log.error(ex.getMessage());
         }
-    }
-
-    @Override
-    @GetMapping("api/events/{eventId}")
-    public EventDto getEvent(@PathVariable @NotNull Long eventId,
-                             @RequestParam Optional<Long> userId) {
-        log.debug("api request for get event {} {}", eventId,
-                userId.map(aLong -> "of user " + aLong).orElse(""));
-        return eventService.findPlainDto(eventId, userId.orElse(null));
     }
 }

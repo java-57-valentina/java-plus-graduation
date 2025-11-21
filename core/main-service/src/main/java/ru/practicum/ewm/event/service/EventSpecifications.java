@@ -5,7 +5,6 @@ import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.event.model.Event;
-import ru.practicum.ewm.location.model.Zone;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -93,9 +92,10 @@ public class EventSpecifications {
             return null;
 
         return (root, query, cb) ->
-                cb.equal(root.get("location").get("id"), locationId);
+                cb.equal(root.get("locationId"), locationId);
     }
 
+    /*
     public static Specification<Event> withCoordinates(Zone zone) {
         if (zone == null)
             return null;
@@ -112,4 +112,5 @@ public class EventSpecifications {
             return cb.lessThanOrEqualTo(distance, zone.getRadius());
         };
     }
+    */
 }

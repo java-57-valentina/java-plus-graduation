@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.practicum.ewm.location.dto.LocationDto;
+import ru.practicum.dto.location.LocationDto;
 
 import java.time.LocalDateTime;
 

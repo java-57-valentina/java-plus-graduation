@@ -5,8 +5,5 @@ CREATE TABLE IF NOT EXISTS participation_requests
     event_id        BIGINT NOT NULL,
     created_at      TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status          VARCHAR(20) NOT NULL,
-
-    -- CONSTRAINT fk_requester FOREIGN KEY (requester_id) REFERENCES users (id),
-    -- CONSTRAINT fk_event1 FOREIGN KEY (event_id) REFERENCES events (id),
     CONSTRAINT chk_status CHECK (status IN ('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED'))
 );

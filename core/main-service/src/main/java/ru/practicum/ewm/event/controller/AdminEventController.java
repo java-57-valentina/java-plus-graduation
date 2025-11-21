@@ -14,7 +14,6 @@ import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventUpdateAdminDto;
 import ru.practicum.ewm.event.model.EventAdminFilter;
 import ru.practicum.ewm.event.service.EventService;
-import ru.practicum.ewm.location.model.Zone;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -56,8 +55,8 @@ public class AdminEventController {
                 .from(offset)
                 .size(limit)
                 .build();
-        if (lat != null && lon != null)
-            filter.setZone(new Zone(lat, lon, radius));
+//        if (lat != null && lon != null)
+//            filter.setZone(new Zone(lat, lon, radius));
 
         return eventService.findFullEventsBy(filter);
     }

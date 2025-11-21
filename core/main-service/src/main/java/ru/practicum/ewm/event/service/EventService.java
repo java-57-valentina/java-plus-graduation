@@ -28,4 +28,6 @@ public interface EventService {
     Collection<EventDtoOut> findFullEventsBy(EventAdminFilter filter);
 
     Collection<EventShortDtoOut> findByInitiator(Long userId, Integer offset, Integer limit);
+
+    boolean existsByLocationId(Long id);
 }

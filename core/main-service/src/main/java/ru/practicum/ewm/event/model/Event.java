@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.category.model.Category;
-import ru.practicum.ewm.location.model.Location;
 
 import java.time.LocalDateTime;
 
@@ -50,10 +49,8 @@ public class Event {
     @Column(name = "published_on")
     private LocalDateTime publishedOn;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id", nullable = false)
-    private Location location;
+    @Column(name = "location_id", nullable = false)
+    private Long locationId;
 
     @Builder.Default
     @Column(nullable = false)

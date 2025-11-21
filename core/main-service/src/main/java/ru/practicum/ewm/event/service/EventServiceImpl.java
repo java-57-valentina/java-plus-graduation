@@ -10,10 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.clients.LocationApi;
 import ru.practicum.clients.UserApi;
 import ru.practicum.dto.event.EventDto;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.clients.RequestApi;
+import ru.practicum.dto.location.LocationDto;
+import ru.practicum.dto.location.LocationDtoOut;
 import ru.practicum.dto.user.UserDtoOut;
 import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
@@ -28,8 +31,6 @@ import ru.practicum.ewm.event.repository.EventRepository;
 import ru.practicum.exception.ConditionNotMetException;
 import ru.practicum.exception.NoAccessException;
 import ru.practicum.exception.NotFoundException;
-import ru.practicum.ewm.location.model.Location;
-import ru.practicum.ewm.location.service.LocationService;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.StatsDtoOut;
 
@@ -53,7 +54,7 @@ public class EventServiceImpl implements EventService {
     private final RequestApi requestClient;
     private final UserApi userClient;
 
-    private final LocationService locationService;
+    private final LocationApi locationClient;
 
     private final StatsOperations statsClient;
 
@@ -66,15 +67,15 @@ public class EventServiceImpl implements EventService {
         Category category = getCategory(eventDto.getCategoryId());
         UserDtoOut user = userClient.getUser(userId);
 
-        Location location = locationService.getOrCreateLocation(eventDto.getLocation());
+        LocationDtoOut location = locationClient.getOrCreateLocation(eventDto.getLocation());
 
         Event event = EventMapper.fromDto(eventDto);
-        event.setLocation(location);
+        event.setLocationId(location.getId());
         event.setCategory(category);
         event.setInitiatorId(userId);
         event = eventRepository.save(event);
 
-        return EventMapper.toDto(event, user);
+        return EventMapper.toDto(event, user, location);
     }
 
     @Override
@@ -93,8 +94,8 @@ public class EventServiceImpl implements EventService {
         Optional.ofNullable(eventDto.getDescription()).ifPresent(event::setDescription);
         Optional.ofNullable(eventDto.getPaid()).ifPresent(event::setPaid);
         Optional.ofNullable(eventDto.getLocation()).ifPresent(loc -> {
-            Location location = locationService.getOrCreateLocation(eventDto.getLocation());
-            event.setLocation(location);
+            LocationDtoOut location = locationClient.getOrCreateLocation(eventDto.getLocation());
+            event.setLocationId(location.getId());
         });
         Optional.ofNullable(eventDto.getParticipantLimit()).ifPresent(event::setParticipantLimit);
         Optional.ofNullable(eventDto.getRequestModeration()).ifPresent(event::setRequestModeration);
@@ -119,9 +120,10 @@ public class EventServiceImpl implements EventService {
         }
 
         UserDtoOut user = userClient.getUser(userId);
+        LocationDtoOut location = locationClient.getLocation(event.getLocationId());
         Event updated = eventRepository.save(event);
 
-        return EventMapper.toDto(updated, user);
+        return EventMapper.toDto(updated, user, location);
     }
 
     private void checkModificationAccess(Event event, Long userId, String action) {
@@ -145,8 +147,8 @@ public class EventServiceImpl implements EventService {
         Optional.ofNullable(eventDto.getParticipantLimit()).ifPresent(event::setParticipantLimit);
         Optional.ofNullable(eventDto.getPaid()).ifPresent(event::setPaid);
         Optional.ofNullable(eventDto.getLocation()).ifPresent(loc -> {
-            Location location = locationService.getOrCreateLocation(eventDto.getLocation());
-            event.setLocation(location);
+            LocationDtoOut location = locationClient.getOrCreateLocation(eventDto.getLocation());
+            event.setLocationId(location.getId());
         });
         Optional.ofNullable(eventDto.getParticipantLimit()).ifPresent(event::setParticipantLimit);
         Optional.ofNullable(eventDto.getRequestModeration()).ifPresent(event::setRequestModeration);
@@ -164,7 +166,9 @@ public class EventServiceImpl implements EventService {
         }
 
         UserDtoOut user = userClient.getUser(event.getInitiatorId());
-        return EventMapper.toDto(event, user);
+        LocationDtoOut location = locationClient.getLocation(event.getLocationId());
+
+        return EventMapper.toDto(event, user, location);
     }
 
     @Override
@@ -177,7 +181,9 @@ public class EventServiceImpl implements EventService {
         enrichWithViewsCount(List.of(event));
 
         UserDtoOut user = userClient.getUser(event.getInitiatorId());
-        return EventMapper.toDto(event, user);
+        LocationDtoOut location = locationClient.getLocation(event.getLocationId());
+
+        return EventMapper.toDto(event, user, location);
     }
 
     @Override
@@ -187,7 +193,9 @@ public class EventServiceImpl implements EventService {
         enrichWithViewsCount(List.of(event));
 
         UserDtoOut user = userClient.getUser(event.getInitiatorId());
-        return EventMapper.toDto(event, user);
+        LocationDtoOut location = locationClient.getLocation(event.getLocationId());
+
+        return EventMapper.toDto(event, user, location);
     }
 
     @Override
@@ -214,10 +222,16 @@ public class EventServiceImpl implements EventService {
         Specification<Event> spec = buildSpecification(filter);
         Collection<Event> events = findBy(spec, filter.getPageable());
         Set<Long> initiatorsIds = events.stream().map(Event::getInitiatorId).collect(Collectors.toSet());
+        Set<Long> locationsIds = events.stream().map(Event::getLocationId).collect(Collectors.toSet());
+
         Map<Long, UserDtoOut> initiators = userClient.getUsers(initiatorsIds);
+        Map<Long, LocationDtoOut> locations = locationClient.getLocations(locationsIds);
 
         return events.stream()
-                .map((Event event) -> EventMapper.toDto(event, initiators.get(event.getInitiatorId())))
+                .map((Event event) -> EventMapper.toDto(
+                        event,
+                        initiators.get(event.getInitiatorId()),
+                        locations.get(event.getLocationId())))
                 .toList();
     }
 
@@ -236,8 +250,8 @@ public class EventServiceImpl implements EventService {
                         optionalSpec(EventSpecifications.withStatesIn(filter.getStates())),
                         optionalSpec(EventSpecifications.withRangeStart(filter.getRangeStart())),
                         optionalSpec(EventSpecifications.withRangeEnd(filter.getRangeEnd())),
-                        optionalSpec(EventSpecifications.withLocationId(filter.getLocationId())),
-                        optionalSpec(EventSpecifications.withCoordinates(filter.getZone()))
+                        optionalSpec(EventSpecifications.withLocationId(filter.getLocationId()))
+                        // optionalSpec(EventSpecifications.withCoordinates(filter.getZone()))
                 )
                 .filter(Objects::nonNull)
                 .reduce(Specification::and)
@@ -251,7 +265,7 @@ public class EventServiceImpl implements EventService {
                         optionalSpec(EventSpecifications.withPaid(filter.getPaid())),
                         optionalSpec(EventSpecifications.withState(filter.getState())),
                         optionalSpec(EventSpecifications.withLocationId(filter.getLocationId())),
-                        optionalSpec(EventSpecifications.withCoordinates(filter.getZone())),
+                        // optionalSpec(EventSpecifications.withCoordinates(filter.getZone())),
                         optionalSpec(EventSpecifications.withOnlyAvailable(filter.getOnlyAvailable())),
                         optionalSpec(EventSpecifications.withRangeStart(filter.getRangeStart())),
                         optionalSpec(EventSpecifications.withRangeEnd(filter.getRangeEnd()))
@@ -276,6 +290,11 @@ public class EventServiceImpl implements EventService {
         return events.stream()
                 .map((Event event) -> EventMapper.toShortDto(event, user))
                 .toList();
+    }
+
+    @Override
+    public boolean existsByLocationId(Long id) {
+        return eventRepository.existsByLocationId(id);
     }
 
     private void enrichWithConfirmedRequestsCount(Collection<Event> events) {

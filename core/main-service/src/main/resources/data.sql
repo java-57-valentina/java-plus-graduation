@@ -1,4 +1,4 @@
-SELECT * FROM locations;
+SELECT * FROM events;
 
 --INSERT INTO categories(name) VALUES('Образовательные');
 --INSERT INTO categories(name) VALUES('Саморазвитие');

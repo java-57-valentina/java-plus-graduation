@@ -2,13 +2,13 @@ package ru.practicum.ewm.event.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.dto.event.EventDto;
+import ru.practicum.dto.location.LocationDtoOut;
 import ru.practicum.dto.user.UserDtoOut;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
 import ru.practicum.ewm.event.dto.EventCreateDto;
 import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.event.model.Event;
-import ru.practicum.ewm.location.mapper.LocationMapper;
 
 @UtilityClass
 public class EventMapper {
@@ -24,7 +24,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventDtoOut toDto(Event event, UserDtoOut userDto) {
+    public static EventDtoOut toDto(Event event, UserDtoOut userDto, LocationDtoOut location) {
         return EventDtoOut.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -38,7 +38,7 @@ public class EventMapper {
                 .state(event.getState())
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
-                .location(LocationMapper.toDto(event.getLocation()))
+                .location(location)
                 .participantLimit(event.getParticipantLimit())
                 .requestModeration(event.getRequestModeration())
                 .build();
@@ -72,7 +72,7 @@ public class EventMapper {
                 .state(event.getState())
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
-                .locationId(event.getLocation().getId())
+                .locationId(event.getLocationId())
                 .participantLimit(event.getParticipantLimit())
                 .requestModeration(event.getRequestModeration())
                 .build();

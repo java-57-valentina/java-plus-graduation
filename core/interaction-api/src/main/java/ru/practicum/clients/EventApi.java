@@ -16,4 +16,7 @@ public interface EventApi {
     @GetMapping("/{eventId}")
     EventDto getEvent(@PathVariable @NotNull Long eventId,
                       @RequestParam(required = false) Optional<Long> userId);
+
+    @GetMapping("/check-exists/{id}")
+    boolean existsByLocationId(@PathVariable Long id);
 }
