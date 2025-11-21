@@ -1,4 +1,4 @@
-package ru.practicum.ewm.participation.dto;
+package ru.practicum.requests.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

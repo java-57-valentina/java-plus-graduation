@@ -1,6 +1,6 @@
 package ru.practicum.ewm.event.service;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 import feign.FeignException;
@@ -10,7 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.dto.event.EventDto;
 import ru.practicum.dto.event.EventState;
+import ru.practicum.clients.RequestApi;
+import ru.practicum.ewm.event.dto.EventDtoOut;
+import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.event.dto.*;
@@ -19,23 +23,17 @@ import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.event.model.EventAdminFilter;
 import ru.practicum.ewm.event.model.EventFilter;
 import ru.practicum.ewm.event.repository.EventRepository;
-import ru.practicum.ewm.location.model.Location;
-import ru.practicum.ewm.location.service.LocationService;
-import ru.practicum.ewm.participation.model.RequestsCount;
-import ru.practicum.ewm.participation.repository.ParticipationRequestRepository;
-import ru.practicum.ewm.user.model.User;
-import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.exception.ConditionNotMetException;
 import ru.practicum.exception.NoAccessException;
 import ru.practicum.exception.NotFoundException;
+import ru.practicum.ewm.location.model.Location;
+import ru.practicum.ewm.location.service.LocationService;
+import ru.practicum.ewm.user.model.User;
+import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.StatsDtoOut;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.practicum.ewm.constants.Constants.STATS_EVENTS_URL;
@@ -52,7 +50,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
-    private final ParticipationRequestRepository requestRepository;
+    private final RequestApi requestClient;
 
     private final LocationService locationService;
 
@@ -176,20 +174,19 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventDtoOut find(Long userId, Long eventId) {
-        if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("User", userId);
-        }
-
-        Event event = getEvent(eventId);
-
-        if (!event.getInitiator().getId().equals(userId)) {
-            throw new NoAccessException("Only initiator can view this event");
-        }
-
+        Event event = getEvent(eventId, userId);
         enrichWithConfirmedRequestsCount(List.of(event));
         enrichWithViewsCount(List.of(event));
 
         return EventMapper.toDto(event);
+    }
+
+    @Override
+    public EventDto findPlainDto(Long eventId, Long userId) {
+        if (userId == null)
+            return EventMapper.toPlainDto(getEvent(eventId));
+        else
+            return EventMapper.toPlainDto(getEvent(eventId, userId));
     }
 
     @Override
@@ -271,20 +268,19 @@ public class EventServiceImpl implements EventService {
         if (events.isEmpty())
             return;
 
-        List<Long> ids = events.stream().map(Event::getId).toList();
-        List<RequestsCount> requestsCounts = requestRepository.countConfirmedRequestsForEvents(ids);
-        if (requestsCounts.isEmpty())
-            return;
+        Set<Long> ids = events.stream().map(Event::getId).collect(Collectors.toSet());
+        try {
+            log.debug("enrichWithConfirmedRequestsCount of events: {}", ids);
+            Map<Long, Integer> requestsCounts = requestClient.getConfirmedRequestsForEvents(ids);
+            if (requestsCounts.isEmpty())
+                return;
 
-        Map<Long, Integer> counts = requestsCounts
-                .stream()
-                .collect(Collectors.toMap(
-                        RequestsCount::getId,
-                        RequestsCount::getCount
-                ));
-        events.forEach(e ->
-                e.setConfirmedRequests(counts.getOrDefault(e.getId(), 0))
-        );
+            events.forEach(e ->
+                    e.setConfirmedRequests(requestsCounts.getOrDefault(e.getId(), 0))
+            );
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+        }
     }
 
     private void enrichWithViewsCount(Collection<Event> events) {
@@ -365,6 +361,11 @@ public class EventServiceImpl implements EventService {
     @SuppressWarnings("UnusedReturnValue")
     private Event getEvent(Long eventId) {
         return eventRepository.findById(eventId)
+                .orElseThrow(() -> new NotFoundException("Event", eventId));
+    }
+
+    private Event getEvent(Long eventId, Long initiatorId) {
+        return eventRepository.findByIdAndInitiatorId(eventId, initiatorId)
                 .orElseThrow(() -> new NotFoundException("Event", eventId));
     }
 

@@ -1,10 +1,12 @@
-package ru.practicum.ewm.participation.service;
+package ru.practicum.requests.service;
 
-import ru.practicum.ewm.participation.dto.EventRequestStatusUpdateRequest;
-import ru.practicum.ewm.participation.dto.EventRequestStatusUpdateResult;
-import ru.practicum.ewm.participation.dto.ParticipationRequestDto;
+import ru.practicum.requests.dto.EventRequestStatusUpdateRequest;
+import ru.practicum.requests.dto.EventRequestStatusUpdateResult;
+import ru.practicum.requests.dto.ParticipationRequestDto;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface ParticipationRequestService {
 
@@ -47,4 +49,6 @@ public interface ParticipationRequestService {
     EventRequestStatusUpdateResult updateRequestStatuses(Long userId,
                                                          Long eventId,
                                                          EventRequestStatusUpdateRequest request);
+
+    Map<Long, Integer> getConfirmedRequests(Set<Long> ids);
 }

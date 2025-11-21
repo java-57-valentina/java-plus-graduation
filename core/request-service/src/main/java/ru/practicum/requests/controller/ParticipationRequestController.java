@@ -1,23 +1,29 @@
-package ru.practicum.ewm.participation.controller;
+package ru.practicum.requests.controller;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.participation.dto.ParticipationRequestDto;
-import ru.practicum.ewm.participation.service.ParticipationRequestService;
+import ru.practicum.clients.RequestApi;
+import ru.practicum.requests.dto.ParticipationRequestDto;
+import ru.practicum.requests.service.ParticipationRequestService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * REST-контроллер для работы с запросами на участие в событиях пользователя.
  * Все методы работают с URL в формате /users/{userId}/requests
  */
+@Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
-@Validated
-public class ParticipationRequestController {
+public class ParticipationRequestController implements RequestApi {
 
     private final ParticipationRequestService requestService;
 
@@ -64,4 +70,10 @@ public class ParticipationRequestController {
         return ResponseEntity.ok(canceledRequest);
     }
 
+    @Override
+    @PostMapping("/api/requests/counts")
+    public Map<Long, Integer> getConfirmedRequestsForEvents(@RequestBody @NotNull Set<Long> ids) {
+        log.debug("api request for get confirmed requests for events: {}", ids);
+        return requestService.getConfirmedRequests(ids);
+    }
 }

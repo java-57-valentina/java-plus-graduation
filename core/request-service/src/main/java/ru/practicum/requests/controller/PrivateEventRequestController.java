@@ -1,4 +1,4 @@
-package ru.practicum.ewm.participation.controller;
+package ru.practicum.requests.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.participation.dto.EventRequestStatusUpdateRequest;
-import ru.practicum.ewm.participation.dto.EventRequestStatusUpdateResult;
-import ru.practicum.ewm.participation.dto.ParticipationRequestDto;
-import ru.practicum.ewm.participation.service.ParticipationRequestService;
+import ru.practicum.requests.dto.EventRequestStatusUpdateRequest;
+import ru.practicum.requests.dto.EventRequestStatusUpdateResult;
+import ru.practicum.requests.dto.ParticipationRequestDto;
+import ru.practicum.requests.service.ParticipationRequestService;
 
 import java.util.List;
 

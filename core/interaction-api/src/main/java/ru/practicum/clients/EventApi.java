@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.practicum.dto.event.EventDto;
 
+import java.util.Optional;
 
-@FeignClient(name = "events", path = "/api/events")
+
+@FeignClient(name = "main-service", path = "/api/events")
 public interface EventApi {
 
-    @GetMapping
-    EventDto getEventWithCreator(@RequestParam @NotNull Long eventId,
-                                 @RequestParam @NotNull Long userId);
-
     @GetMapping("/{eventId}")
-    EventDto getEvent(@PathVariable @NotNull Long eventId);
+    EventDto getEvent(@PathVariable @NotNull Long eventId,
+                      @RequestParam(required = false) Optional<Long> userId);
 }

@@ -1,8 +1,8 @@
-package ru.practicum.ewm.participation.mapper;
+package ru.practicum.requests.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.ewm.participation.dto.ParticipationRequestDto;
-import ru.practicum.ewm.participation.model.ParticipationRequest;
+import ru.practicum.requests.dto.ParticipationRequestDto;
+import ru.practicum.requests.model.ParticipationRequest;
 
 @UtilityClass
 public class ParticipationRequestMapper {
@@ -10,8 +10,8 @@ public class ParticipationRequestMapper {
         return ParticipationRequestDto.builder()
                 .id(r.getId())
                 .created(r.getCreated())
-                .event(r.getEvent().getId())
-                .requester(r.getRequester().getId())
+                .event(r.getEventId())
+                .requester(r.getRequesterId())
                 .status(r.getStatus().name())
                 .build();
     }

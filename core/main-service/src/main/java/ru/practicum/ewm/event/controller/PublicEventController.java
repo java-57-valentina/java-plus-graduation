@@ -2,14 +2,13 @@ package ru.practicum.ewm.event.controller;
 
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +16,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.clients.EventApi;
+import ru.practicum.dto.event.EventDto;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
@@ -37,8 +37,7 @@ import static ru.practicum.ewm.constants.Constants.STATS_EVENTS_URL;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/events")
-public class PublicEventController {
+public class PublicEventController implements EventApi {
 
     private final EventService eventService;
     private final StatsOperations statsClient;
@@ -47,7 +46,7 @@ public class PublicEventController {
     private String appName;
 
     // Получение событий с возможностью фильтрации
-    @GetMapping
+    @GetMapping("/events")
     public Collection<EventShortDtoOut> getEvents(
             @Size(min = 3, max = 1000, message = "Текст должен быть длиной от 3 до 1000 символов")
             @RequestParam(required = false) String text,
@@ -101,7 +100,7 @@ public class PublicEventController {
         return events;
     }
 
-    @GetMapping("/{eventId}")
+    @GetMapping("/events/{eventId}")
     public EventDtoOut get(@PathVariable @Min(1) Long eventId,
                            HttpServletRequest request) {
 
@@ -125,5 +124,14 @@ public class PublicEventController {
         } catch (FeignException ex) {
             log.error(ex.getMessage());
         }
+    }
+
+    @Override
+    @GetMapping("api/events/{eventId}")
+    public EventDto getEvent(@PathVariable @NotNull Long eventId,
+                             @RequestParam Optional<Long> userId) {
+        log.debug("api request for get event {} {}", eventId,
+                userId.map(aLong -> "of user " + aLong).orElse(""));
+        return eventService.findPlainDto(eventId, userId.orElse(null));
     }
 }

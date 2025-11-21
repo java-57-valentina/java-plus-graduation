@@ -1,4 +1,4 @@
-package ru.practicum.ewm.participation.dto;
+package ru.practicum.requests.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

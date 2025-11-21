@@ -1,5 +1,8 @@
 package ru.practicum.ewm.event.service;
 
+import ru.practicum.dto.event.EventDto;
+import ru.practicum.ewm.event.dto.EventDtoOut;
+import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.event.dto.*;
 import ru.practicum.ewm.event.model.EventAdminFilter;
 import ru.practicum.ewm.event.model.EventFilter;
@@ -17,6 +20,8 @@ public interface EventService {
     EventDtoOut findPublished(Long eventId);
 
     EventDtoOut find(Long userId, Long eventId);
+
+    EventDto findPlainDto(Long eventId, Long userId);
 
     Collection<EventShortDtoOut> findShortEventsBy(EventFilter filter);
 

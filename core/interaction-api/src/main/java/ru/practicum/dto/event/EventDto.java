@@ -16,18 +16,13 @@ public class EventDto {
     private String title;
     private String annotation;
     private String description;
-//    private CategoryDtoOut category;
-    // private UserDtoOut initiator;
+
+    private Long categoryId;
     private Long initiatorId;
-//    private LocationDtoOut location;
+    private Long locationId;
 
-    // @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime eventDate;
-
-    // @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime createdOn;
-
-    // @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime publishedOn;
 
     private Boolean paid;

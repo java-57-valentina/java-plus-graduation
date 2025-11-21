@@ -3,11 +3,10 @@ package ru.practicum.ewm.event.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.ewm.category.dto.CategoryDtoOut;
+import ru.practicum.ewm.constants.Constants;
 import ru.practicum.ewm.user.dto.UserDtoOut;
 
 import java.time.LocalDateTime;
-
-import static ru.practicum.ewm.constants.Constants.DATE_TIME_FORMAT;
 
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class EventShortDtoOut {
     private CategoryDtoOut category;
     private UserDtoOut initiator;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime eventDate;
 
     private Boolean paid;

@@ -1,6 +1,7 @@
 package ru.practicum.ewm.event.mapper;
 
 import lombok.experimental.UtilityClass;
+import ru.practicum.dto.event.EventDto;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
 import ru.practicum.ewm.event.dto.EventCreateDto;
 import ru.practicum.ewm.event.dto.EventDtoOut;
@@ -54,6 +55,26 @@ public class EventMapper {
                 .initiator(UserMapper.toDto(event.getInitiator()))
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
+                .build();
+    }
+
+    public static EventDto toPlainDto(Event event) {
+        return EventDto.builder()
+                .id(event.getId())
+                .annotation(event.getAnnotation())
+                .title(event.getTitle())
+                .categoryId(event.getCategory().getId())
+                .paid(event.getPaid())
+                .eventDate(event.getEventDate())
+                .description(event.getDescription())
+                .initiatorId(event.getInitiator().getId())
+                .createdOn(event.getCreatedAt())
+                .state(event.getState())
+                .confirmedRequests(event.getConfirmedRequests())
+                .views(event.getViews())
+                .locationId(event.getLocation().getId())
+                .participantLimit(event.getParticipantLimit())
+                .requestModeration(event.getRequestModeration())
                 .build();
     }
 }
