@@ -27,7 +27,8 @@ public class CompilationMapper {
                 .title(compilation.getTitle())
                 .pinned(compilation.getPinned())
                 .events(compilation.getEvents().stream()
-                        .map(EventMapper::toShortDto)
+                        // TODO: fix it!
+                        .map((Event event) -> EventMapper.toShortDto(event, null))
                         .toList())
                 .build();
     }

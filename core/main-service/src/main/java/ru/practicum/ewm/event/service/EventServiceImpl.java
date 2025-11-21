@@ -10,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.clients.UserApi;
 import ru.practicum.dto.event.EventDto;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.clients.RequestApi;
+import ru.practicum.dto.user.UserDtoOut;
 import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.category.model.Category;
@@ -28,8 +30,6 @@ import ru.practicum.exception.NoAccessException;
 import ru.practicum.exception.NotFoundException;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.location.service.LocationService;
-import ru.practicum.ewm.user.model.User;
-import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.StatsDtoOut;
 
@@ -48,9 +48,10 @@ public class EventServiceImpl implements EventService {
     private static final int MIN_TIME_TO_PUBLISHED_EVENT = 1;
 
     private final EventRepository eventRepository;
-    private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+
     private final RequestApi requestClient;
+    private final UserApi userClient;
 
     private final LocationService locationService;
 
@@ -63,17 +64,17 @@ public class EventServiceImpl implements EventService {
 
         validateEventDate(eventDto.getEventDate(), EventState.PENDING);
         Category category = getCategory(eventDto.getCategoryId());
-        User user = getUser(userId);
+        UserDtoOut user = userClient.getUser(userId);
+
         Location location = locationService.getOrCreateLocation(eventDto.getLocation());
 
         Event event = EventMapper.fromDto(eventDto);
         event.setLocation(location);
         event.setCategory(category);
-        event.setInitiator(user);
-
+        event.setInitiatorId(userId);
         event = eventRepository.save(event);
 
-        return EventMapper.toDto(event);
+        return EventMapper.toDto(event, user);
     }
 
     @Override
@@ -81,10 +82,7 @@ public class EventServiceImpl implements EventService {
     public EventDtoOut update(Long userId, Long eventId, EventUpdateDto eventDto) {
 
         Event event = getEvent(eventId);
-
-        if (!event.getInitiator().getId().equals(userId)) {
-            throw new NoAccessException("Only initiator can edit the event");
-        }
+        checkModificationAccess(event, userId, "edit");
 
         if (event.getState() == EventState.PUBLISHED) {
             throw new ConditionNotMetException("Cannot update published event");
@@ -120,8 +118,16 @@ public class EventServiceImpl implements EventService {
             }
         }
 
+        UserDtoOut user = userClient.getUser(userId);
         Event updated = eventRepository.save(event);
-        return EventMapper.toDto(updated);
+
+        return EventMapper.toDto(updated, user);
+    }
+
+    private void checkModificationAccess(Event event, Long userId, String action) {
+        if (!event.getInitiatorId().equals(userId)) {
+            throw new NoAccessException("Only initiatorId can " + action + " this event");
+        }
     }
 
     @Override
@@ -157,19 +163,21 @@ public class EventServiceImpl implements EventService {
             }
         }
 
-        return EventMapper.toDto(event);
+        UserDtoOut user = userClient.getUser(event.getInitiatorId());
+        return EventMapper.toDto(event, user);
     }
 
     @Override
     public EventDtoOut findPublished(Long eventId) {
 
         Event event = eventRepository.findPublishedById(eventId)
-                .orElseThrow(() -> new NotFoundException("Event", eventId));
+                .orElseThrow(() -> new NotFoundException("Published event", eventId));
 
         enrichWithConfirmedRequestsCount(List.of(event));
         enrichWithViewsCount(List.of(event));
 
-        return EventMapper.toDto(event);
+        UserDtoOut user = userClient.getUser(event.getInitiatorId());
+        return EventMapper.toDto(event, user);
     }
 
     @Override
@@ -178,7 +186,8 @@ public class EventServiceImpl implements EventService {
         enrichWithConfirmedRequestsCount(List.of(event));
         enrichWithViewsCount(List.of(event));
 
-        return EventMapper.toDto(event);
+        UserDtoOut user = userClient.getUser(event.getInitiatorId());
+        return EventMapper.toDto(event, user);
     }
 
     @Override
@@ -192,16 +201,23 @@ public class EventServiceImpl implements EventService {
     @Override
     public Collection<EventShortDtoOut> findShortEventsBy(EventFilter filter) {
         Specification<Event> spec = buildSpecification(filter);
-        return findBy(spec, filter.getPageable()).stream()
-                .map(EventMapper::toShortDto)
+        Collection<Event> events = findBy(spec, filter.getPageable());
+        Set<Long> initiatorsIds = events.stream().map(Event::getInitiatorId).collect(Collectors.toSet());
+        Map<Long, UserDtoOut> initiators = userClient.getUsers(initiatorsIds);
+        return events.stream()
+                .map((Event event) -> EventMapper.toShortDto(event, initiators.get(event.getInitiatorId())))
                 .toList();
     }
 
     @Override
     public Collection<EventDtoOut> findFullEventsBy(EventAdminFilter filter) {
         Specification<Event> spec = buildSpecification(filter);
-        return findBy(spec, filter.getPageable()).stream()
-                .map(EventMapper::toDto)
+        Collection<Event> events = findBy(spec, filter.getPageable());
+        Set<Long> initiatorsIds = events.stream().map(Event::getInitiatorId).collect(Collectors.toSet());
+        Map<Long, UserDtoOut> initiators = userClient.getUsers(initiatorsIds);
+
+        return events.stream()
+                .map((Event event) -> EventMapper.toDto(event, initiators.get(event.getInitiatorId())))
                 .toList();
     }
 
@@ -251,16 +267,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Collection<EventShortDtoOut> findByInitiator(Long userId, Integer offset, Integer limit) {
-        if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("User", userId);
-        }
+        UserDtoOut user = userClient.getUser(userId);
 
         Collection<Event> events = eventRepository.findByInitiatorId(userId, offset, limit);
         enrichWithConfirmedRequestsCount(events);
         enrichWithViewsCount(events);
 
         return events.stream()
-                .map(EventMapper::toShortDto)
+                .map((Event event) -> EventMapper.toShortDto(event, user))
                 .toList();
     }
 
@@ -350,12 +364,6 @@ public class EventServiceImpl implements EventService {
     private Category getCategory(Long categoryId) {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Category", categoryId));
-    }
-
-    @SuppressWarnings("UnusedReturnValue")
-    private User getUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("User", userId));
     }
 
     @SuppressWarnings("UnusedReturnValue")

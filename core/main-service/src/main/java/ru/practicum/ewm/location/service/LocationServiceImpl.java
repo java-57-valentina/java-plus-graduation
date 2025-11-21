@@ -6,13 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.clients.UserApi;
 import ru.practicum.ewm.event.repository.EventRepository;
 import ru.practicum.ewm.location.dto.*;
 import ru.practicum.ewm.location.mapper.LocationMapper;
 import ru.practicum.ewm.location.model.*;
 import ru.practicum.ewm.location.repository.LocationRepository;
-import ru.practicum.ewm.user.model.User;
-import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.exception.ConditionNotMetException;
 import ru.practicum.exception.DuplicateLocationsException;
 import ru.practicum.exception.NoAccessException;
@@ -32,29 +31,29 @@ public class LocationServiceImpl implements LocationService {
 
     private static final double NEARBY_RADIUS = 50; // meters
 
-    private final UserRepository userRepository;
     private final LocationRepository locationRepository;
     private final EventRepository eventRepository;
 
+    private final UserApi userClient;
 
     @Override
     @Transactional
     public LocationFullDtoOut addLocationByAdmin(LocationCreateDto dto) {
         Location location = LocationMapper.fromDto(dto);
         location.setState(LocationState.APPROVED);
-        return LocationMapper.toFullDto(locationRepository.save(location));
+        return LocationMapper.toFullDto(locationRepository.save(location), null);
     }
 
     @Override
     @Transactional
     public LocationPrivateDtoOut addLocation(Long userId, LocationCreateDto dto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("User", userId));
+        if (!userClient.existsById(userId))
+            throw new NotFoundException("User", userId);
 
         checkForDuplicate(dto.getName(), dto.getLatitude(), dto.getLongitude());
 
         Location location = LocationMapper.fromDto(dto);
-        location.setCreator(user);
+        location.setCreatorId(userId);
         Location saved = locationRepository.save(location);
         return LocationMapper.toPrivateDto(saved);
     }
@@ -73,7 +72,8 @@ public class LocationServiceImpl implements LocationService {
         Optional.ofNullable(dto.getState()).ifPresent(
                 state -> changeLocationState(location, state));
 
-        return LocationMapper.toFullDto(location);
+        // TODO: fix it
+        return LocationMapper.toFullDto(location, null);
     }
 
     @Override
@@ -86,9 +86,7 @@ public class LocationServiceImpl implements LocationService {
             throw new ConditionNotMetException("Cannot update published or rejected location");
         }
 
-        if (location.getCreator() == null || !location.getCreator().getId().equals(userId)) {
-            throw new NoAccessException("Only creator can edit this location");
-        }
+        checkModificationAccess(location, userId, "edit");
 
         boolean needToCheckDuplicates =
                 (dto.getName() != null && !dto.getName().equals(location.getName())) ||
@@ -162,14 +160,15 @@ public class LocationServiceImpl implements LocationService {
         Specification<Location> spec = buildSpecification(filter);
         List<Location> locations = locationRepository.findAll(spec, filter.getPageable()).getContent();
         return locations.stream()
-                .map(LocationMapper::toFullDto)
+                // TODO: fix it
+                .map((Location location) -> LocationMapper.toFullDto(location, null))
                 .toList();
     }
 
     @Override
     public Collection<LocationPrivateDtoOut> findAllByFilter(Long userId, LocationPrivateFilter filter) {
 
-        if (!userRepository.existsById(userId))
+        if (!userClient.existsById(userId))
             throw new NotFoundException("User", userId);
 
         Specification<Location> spec = buildSpecification(userId, filter);
@@ -192,7 +191,8 @@ public class LocationServiceImpl implements LocationService {
     public LocationFullDtoOut getByIdForAdmin(Long id) {
         Location location = locationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Location", id));
-        return LocationMapper.toFullDto(location);
+        // TODO: fix it
+        return LocationMapper.toFullDto(location, null);
     }
 
     @Override
@@ -214,15 +214,19 @@ public class LocationServiceImpl implements LocationService {
             throw new ConditionNotMetException("Cannot delete published location");
         }
 
-        if (location.getCreator() == null || !location.getCreator().getId().equals(userId)) {
-            throw new NoAccessException("Only creator can delete this location");
-        }
+        checkModificationAccess(location, userId, "delete");
 
         if (eventRepository.existsByLocationId(id)) {
             throw new ConditionNotMetException("There are events in this location");
         }
 
         locationRepository.deleteById(id);
+    }
+
+    private void checkModificationAccess(Location location, Long userId, String action) {
+        if (location.getCreatorId() == null || !location.getCreatorId().equals(userId)) {
+            throw new NoAccessException("Only creator can " + action + " this location");
+        }
     }
 
     @Override

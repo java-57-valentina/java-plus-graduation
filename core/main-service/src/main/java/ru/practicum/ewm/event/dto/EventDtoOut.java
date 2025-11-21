@@ -3,10 +3,10 @@ package ru.practicum.ewm.event.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.dto.event.EventState;
+import ru.practicum.dto.user.UserDtoOut;
 import ru.practicum.ewm.category.dto.CategoryDtoOut;
 import ru.practicum.ewm.constants.Constants;
 import ru.practicum.ewm.location.dto.LocationDtoOut;
-import ru.practicum.ewm.user.dto.UserDtoOut;
 
 import java.time.LocalDateTime;
 

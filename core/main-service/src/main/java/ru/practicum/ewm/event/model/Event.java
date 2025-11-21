@@ -5,7 +5,6 @@ import lombok.*;
 import ru.practicum.dto.event.EventState;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.location.model.Location;
-import ru.practicum.ewm.user.model.User;
 
 import java.time.LocalDateTime;
 
@@ -38,10 +37,8 @@ public class Event {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "initiator_id", nullable = false)
-    private User initiator;
+    @Column(name = "initiator_id", nullable = false)
+    private Long initiatorId;
 
     @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;

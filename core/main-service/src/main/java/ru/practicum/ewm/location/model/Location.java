@@ -2,7 +2,6 @@ package ru.practicum.ewm.location.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.practicum.ewm.user.model.User;
 
 @Entity
 @Getter
@@ -18,10 +17,8 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator_id")
-    private User creator;
+    @Column(name = "creator_id")
+    private Long creatorId;
 
     @Column(nullable = false)
     private String name;

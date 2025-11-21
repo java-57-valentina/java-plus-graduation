@@ -30,7 +30,7 @@ public class EventSpecifications {
             return null;
 
         return (root, query, cb) ->
-                root.get("initiator").get("id").in(users);
+                root.get("initiatorId").in(users);
     }
 
     public static Specification<Event> withCategoriesIn(List<Long> categories) {

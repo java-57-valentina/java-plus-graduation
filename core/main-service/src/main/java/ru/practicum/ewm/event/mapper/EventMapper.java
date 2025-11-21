@@ -2,13 +2,13 @@ package ru.practicum.ewm.event.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.dto.event.EventDto;
+import ru.practicum.dto.user.UserDtoOut;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
 import ru.practicum.ewm.event.dto.EventCreateDto;
 import ru.practicum.ewm.event.dto.EventDtoOut;
 import ru.practicum.ewm.event.dto.EventShortDtoOut;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.location.mapper.LocationMapper;
-import ru.practicum.ewm.user.mapper.UserMapper;
 
 @UtilityClass
 public class EventMapper {
@@ -24,7 +24,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventDtoOut toDto(Event event) {
+    public static EventDtoOut toDto(Event event, UserDtoOut userDto) {
         return EventDtoOut.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -33,7 +33,7 @@ public class EventMapper {
                 .paid(event.getPaid())
                 .eventDate(event.getEventDate())
                 .description(event.getDescription())
-                .initiator(UserMapper.toDto(event.getInitiator()))
+                .initiator(userDto)
                 .createdOn(event.getCreatedAt())
                 .state(event.getState())
                 .confirmedRequests(event.getConfirmedRequests())
@@ -44,7 +44,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventShortDtoOut toShortDto(Event event) {
+    public static EventShortDtoOut toShortDto(Event event, UserDtoOut userDto) {
         return EventShortDtoOut.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -52,7 +52,7 @@ public class EventMapper {
                 .category(CategoryMapper.toDto(event.getCategory()))
                 .paid(event.getPaid())
                 .eventDate(event.getEventDate())
-                .initiator(UserMapper.toDto(event.getInitiator()))
+                .initiator(userDto)
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
                 .build();
@@ -67,7 +67,7 @@ public class EventMapper {
                 .paid(event.getPaid())
                 .eventDate(event.getEventDate())
                 .description(event.getDescription())
-                .initiatorId(event.getInitiator().getId())
+                .initiatorId(event.getInitiatorId())
                 .createdOn(event.getCreatedAt())
                 .state(event.getState())
                 .confirmedRequests(event.getConfirmedRequests())
