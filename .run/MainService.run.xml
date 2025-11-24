@@ -1,8 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="StatsServer-local" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="ru.practicum.statsserver.StatsServer" />
-    <module name="stats-server" />
-    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
+  <configuration default="false" name="MainService" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ru.practicum.events.MainApp" />
+    <module name="event-service" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="ru.practicum.*" />

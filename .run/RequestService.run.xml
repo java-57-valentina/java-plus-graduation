@@ -1,8 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="MainApp-local" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="ru.practicum.ewm.MainApp" />
-    <module name="main-service" />
-    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
+  <configuration default="false" name="RequestService" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ru.practicum.requests.RequestsApp" />
+    <module name="request-service" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="ru.practicum.*" />
