@@ -10,7 +10,7 @@
     <artifactId>request-service</artifactId>
     <packaging>jar</packaging>
 
-    <name>requests-service</name>
+    <name>request-service</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
