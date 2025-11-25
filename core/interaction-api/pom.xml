@@ -10,12 +10,8 @@
     <artifactId>interaction-api</artifactId>
     <packaging>jar</packaging>
 
-    <name>clients</name>
+    <name>interaction-api</name>
     <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>
