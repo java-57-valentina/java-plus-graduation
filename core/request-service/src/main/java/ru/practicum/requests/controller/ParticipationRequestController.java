@@ -23,7 +23,7 @@ import java.util.Set;
 @Validated
 @RestController
 @RequiredArgsConstructor
-public class ParticipationRequestController implements RequestApi {
+public class ParticipationRequestController {
 
     private final ParticipationRequestService requestService;
 
@@ -68,12 +68,5 @@ public class ParticipationRequestController implements RequestApi {
             @PathVariable Long requestId) {
         ParticipationRequestDto canceledRequest = requestService.cancelRequest(userId, requestId);
         return ResponseEntity.ok(canceledRequest);
-    }
-
-    @Override
-    @PostMapping("/api/requests/counts")
-    public Map<Long, Integer> getConfirmedRequestsForEvents(@RequestBody @NotNull Set<Long> ids) {
-        log.debug("api request for get confirmed requests for events: {}", ids);
-        return requestService.getConfirmedRequests(ids);
     }
 }

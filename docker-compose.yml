@@ -90,7 +90,7 @@ services:
       retries: 10
       start_period: 30s
 
-  # Config Server (если используется)
+  # Config Server
   config-server:
     ports:
       - "8888:8888"

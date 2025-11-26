@@ -36,7 +36,6 @@ public class EventFilter {
     private EventState state = EventState.PUBLISHED;
 
     private Long locationId;
-    // private Zone zone;
 
     @Builder.Default
     private String sort = "EVENT_DATE";

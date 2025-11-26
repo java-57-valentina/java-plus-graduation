@@ -50,8 +50,6 @@ public class PublicEventController {
             @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
             @RequestParam(defaultValue = "false") Boolean onlyAvailable,
             @RequestParam(required = false) Long location,
-//            @RequestParam(required = false) @DecimalMin("-90.0")  @DecimalMax("90.0")  Double lat,
-//            @RequestParam(required = false) @DecimalMin("-180.0") @DecimalMax("180.0") Double lon,
             @RequestParam(defaultValue = "10.0") @DecimalMin("0.0") Double radius,
             @RequestParam(defaultValue = "EVENT_DATE") String sort,
             @RequestParam(defaultValue = "0") Integer from,
@@ -73,9 +71,6 @@ public class PublicEventController {
                 .build();
 
         log.debug("request for getting events (public)");
-
-//        if (lat != null && lon != null)
-//            filter.setZone(new Zone(lat, lon, radius));
 
         if (filter.getRangeStart() != null && filter.getRangeEnd() != null
                 && filter.getRangeStart().isAfter(filter.getRangeEnd())) {

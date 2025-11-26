@@ -55,8 +55,6 @@ public class AdminEventController {
                 .from(offset)
                 .size(limit)
                 .build();
-//        if (lat != null && lon != null)
-//            filter.setZone(new Zone(lat, lon, radius));
 
         return eventService.findFullEventsBy(filter);
     }

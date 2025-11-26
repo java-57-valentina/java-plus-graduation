@@ -250,7 +250,6 @@ public class EventServiceImpl implements EventService {
                         optionalSpec(EventSpecifications.withRangeStart(filter.getRangeStart())),
                         optionalSpec(EventSpecifications.withRangeEnd(filter.getRangeEnd())),
                         optionalSpec(EventSpecifications.withLocationId(filter.getLocationId()))
-                        // optionalSpec(EventSpecifications.withCoordinates(filter.getZone()))
                 )
                 .filter(Objects::nonNull)
                 .reduce(Specification::and)
@@ -264,7 +263,6 @@ public class EventServiceImpl implements EventService {
                         optionalSpec(EventSpecifications.withPaid(filter.getPaid())),
                         optionalSpec(EventSpecifications.withState(filter.getState())),
                         optionalSpec(EventSpecifications.withLocationId(filter.getLocationId())),
-                        // optionalSpec(EventSpecifications.withCoordinates(filter.getZone())),
                         optionalSpec(EventSpecifications.withOnlyAvailable(filter.getOnlyAvailable())),
                         optionalSpec(EventSpecifications.withRangeStart(filter.getRangeStart())),
                         optionalSpec(EventSpecifications.withRangeEnd(filter.getRangeEnd()))

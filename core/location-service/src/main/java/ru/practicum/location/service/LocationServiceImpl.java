@@ -37,8 +37,8 @@ public class LocationServiceImpl implements LocationService {
     private static final double NEARBY_RADIUS = 50; // meters
 
     private final LocationRepository locationRepository;
-    private final EventApi eventClient;
 
+    private final EventApi eventClient;
     private final UserApi userClient;
 
     @Override
@@ -144,10 +144,6 @@ public class LocationServiceImpl implements LocationService {
 
         try {
             return userClient.getUser(creatorId);
-        } catch (FeignException.NotFound e) {
-            log.error("FeignException.NotFound");
-            log.error("{}: Failed to get data of creator id: {} ({})", e.getClass(), creatorId, e.getMessage());
-            return UserDtoOut.builder().id(creatorId).build();
         } catch (Exception e) {
             log.error("{}: Failed to get data of creator id: {} ({})", e.getClass(), creatorId, e.getMessage());
             return UserDtoOut.builder().id(creatorId).build();
@@ -186,9 +182,13 @@ public class LocationServiceImpl implements LocationService {
     public Collection<LocationFullDtoOut> findAllByFilter(LocationAdminFilter filter) {
         Specification<Location> spec = buildSpecification(filter);
         List<Location> locations = locationRepository.findAll(spec, filter.getPageable()).getContent();
+        Map<Long, UserDtoOut> users = userClient.getUsers(locations.stream()
+                .map(Location::getCreatorId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet()));
+
         return locations.stream()
-                // TODO: fix it
-                .map((Location location) -> LocationMapper.toFullDto(location, null))
+                .map((Location location) -> LocationMapper.toFullDto(location, users.get(location.getCreatorId())))
                 .toList();
     }
 

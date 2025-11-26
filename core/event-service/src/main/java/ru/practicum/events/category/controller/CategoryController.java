@@ -34,8 +34,6 @@ public class CategoryController {
         return categoryService.get(id);
     }
 
-
-
     @PostMapping("/admin/categories")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDtoOut createCategory(@Validated @RequestBody CategoryDto categoryDto) {
@@ -50,7 +48,6 @@ public class CategoryController {
         log.debug("Update category id:{} by admin", id);
         return categoryService.update(id, categoryDto);
     }
-
     @DeleteMapping("/admin/categories/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long id) {

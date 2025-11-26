@@ -31,7 +31,6 @@ public class EventAdminFilter {
     private LocalDateTime rangeEnd;
 
     private Long locationId;
-    // private Zone zone;
 
     @Builder.Default
     private Integer from = 0;
