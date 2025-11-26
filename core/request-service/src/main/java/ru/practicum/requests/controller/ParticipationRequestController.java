@@ -1,19 +1,15 @@
 package ru.practicum.requests.controller;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.clients.RequestApi;
 import ru.practicum.requests.dto.ParticipationRequestDto;
 import ru.practicum.requests.service.ParticipationRequestService;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * REST-контроллер для работы с запросами на участие в событиях пользователя.
