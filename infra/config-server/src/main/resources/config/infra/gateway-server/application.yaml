@@ -38,7 +38,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: "health,info"
+        include: "health,info,gateway,routes"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
 
 server:
   port: 8080
