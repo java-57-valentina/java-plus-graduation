@@ -33,16 +33,12 @@ spring:
           predicates:
             - Path=/compilations, /compilations/**, /admin/compilations, /admin/compilations/**
 
-       #- id: main_service_route
-       #  uri: lb://main-service
-       #  predicates:
-       #    - Path=/**
-       #  filters:
-       #    - name: Retry
-       #      args:
-       #        retries: 3
-       #        statuses: BAD_GATEWAY,NOT_FOUND
-       #        methods: GET
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
 
 server:
   port: 8080
