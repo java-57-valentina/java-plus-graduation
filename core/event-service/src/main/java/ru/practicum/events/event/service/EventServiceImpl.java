@@ -27,9 +27,7 @@ import ru.practicum.events.event.model.Event;
 import ru.practicum.events.event.model.EventAdminFilter;
 import ru.practicum.events.event.model.EventFilter;
 import ru.practicum.events.event.repository.EventRepository;
-import ru.practicum.exception.ConditionNotMetException;
-import ru.practicum.exception.NoAccessException;
-import ru.practicum.exception.NotFoundException;
+import ru.practicum.events.exception.*;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.StatsDtoOut;
 

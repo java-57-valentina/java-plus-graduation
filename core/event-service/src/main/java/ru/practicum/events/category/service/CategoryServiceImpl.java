@@ -9,7 +9,7 @@ import ru.practicum.events.event.repository.EventRepository;
 import ru.practicum.events.category.mapper.CategoryMapper;
 import ru.practicum.events.category.model.Category;
 import ru.practicum.events.category.repository.CategoryRepository;
-import ru.practicum.exception.NotFoundException;
+import ru.practicum.events.exception.NotFoundException;
 
 import java.util.Collection;
 

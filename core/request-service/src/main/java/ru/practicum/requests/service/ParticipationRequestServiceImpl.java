@@ -8,13 +8,10 @@ import ru.practicum.clients.EventApi;
 import ru.practicum.clients.UserApi;
 import ru.practicum.dto.event.EventDto;
 import ru.practicum.dto.event.EventState;
-import ru.practicum.exception.ConditionNotMetException;
-import ru.practicum.exception.ForbiddenException;
-import ru.practicum.exception.NoAccessException;
-import ru.practicum.exception.NotFoundException;
 import ru.practicum.requests.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.requests.dto.EventRequestStatusUpdateResult;
 import ru.practicum.requests.dto.ParticipationRequestDto;
+import ru.practicum.requests.exception.*;
 import ru.practicum.requests.mapper.ParticipationRequestMapper;
 import ru.practicum.requests.model.ParticipationRequest;
 import ru.practicum.requests.model.RequestStatus;
@@ -139,7 +136,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
      * @param initiatorId ID пользователя (инициатора события)
      * @return список заявок на участие в событии
      * @throws NotFoundException если событие или пользователь не найдены
-     * @throws NoAccessException если пользователь не является инициатором события
+     * @throws ForbiddenException если пользователь не является инициатором события
      */
     @Override
     public List<ParticipationRequestDto> getRequestsForEvent(Long eventId, Long initiatorId) {

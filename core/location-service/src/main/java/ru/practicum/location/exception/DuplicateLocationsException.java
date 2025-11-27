@@ -1,4 +1,4 @@
-package ru.practicum.exception;
+package ru.practicum.location.exception;
 
 public class DuplicateLocationsException extends RuntimeException {
     public DuplicateLocationsException(String msg) {

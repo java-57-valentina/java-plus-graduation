@@ -1,4 +1,4 @@
-package ru.practicum.events.exception;
+package ru.practicum.location.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,7 +18,7 @@ import java.util.Objects;
 
 @Slf4j
 @RestControllerAdvice
-public class ErrorHandlerImpl {
+public class ErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -51,7 +52,8 @@ public class ErrorHandlerImpl {
 
     @ExceptionHandler({
             ConditionNotMetException.class,
-            IllegalStateException.class})
+            IllegalStateException.class,
+            DuplicateLocationsException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleConflictExceptions(RuntimeException ex) {
         return ErrorResponse.builder()
@@ -84,17 +86,6 @@ public class ErrorHandlerImpl {
                 .build();
     }
 
-    @ExceptionHandler(InvalidRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleInvalidRequestException(InvalidRequestException ex) {
-        return ErrorResponse.builder()
-                .message(ex.getMessage())
-                .reason("Bad request.")
-                .status(HttpStatus.BAD_REQUEST)
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(final Exception e) {
@@ -111,17 +102,6 @@ public class ErrorHandlerImpl {
                 .build();
     }
 
-    @ExceptionHandler(ForbiddenException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleForbiddenException(ForbiddenException ex) {
-        return ErrorResponse.builder()
-                .message(ex.getMessage())
-                .status(HttpStatus.FORBIDDEN)
-                .reason("Access denied.")
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse onDataIntegrityViolationException(final DataIntegrityViolationException e) {
@@ -130,6 +110,17 @@ public class ErrorHandlerImpl {
                 .message(e.getMessage())
                 .status(HttpStatus.CONFLICT)
                 .reason(Objects.requireNonNull(e.getRootCause()).getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+        return ErrorResponse.builder()
+                .message("Required parameter '" + ex.getParameterName() + "' is missing")
+                .reason("Missing parameter.")
+                .status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now())
                 .build();
     }

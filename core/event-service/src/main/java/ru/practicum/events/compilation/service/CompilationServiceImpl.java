@@ -13,8 +13,8 @@ import ru.practicum.events.compilation.model.Compilation;
 import ru.practicum.events.compilation.repository.CompilationRepository;
 import ru.practicum.events.event.model.Event;
 import ru.practicum.events.event.repository.EventRepository;
-import ru.practicum.exception.ConditionNotMetException;
-import ru.practicum.exception.NotFoundException;
+import ru.practicum.events.exception.ConditionNotMetException;
+import ru.practicum.events.exception.NotFoundException;
 
 import java.util.HashSet;
 import java.util.List;

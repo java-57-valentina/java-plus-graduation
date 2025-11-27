@@ -19,7 +19,7 @@ import ru.practicum.events.event.dto.EventDtoOut;
 import ru.practicum.events.event.dto.EventShortDtoOut;
 import ru.practicum.events.event.model.EventFilter;
 import ru.practicum.events.event.service.EventService;
-import ru.practicum.exception.InvalidRequestException;
+import ru.practicum.events.exception.InvalidRequestException;
 import ru.practicum.statsclient.StatsOperations;
 import ru.practicum.statsdto.HitDto;
 

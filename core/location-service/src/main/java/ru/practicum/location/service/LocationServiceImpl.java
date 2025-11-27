@@ -1,7 +1,6 @@
 package ru.practicum.location.service;
 
 import feign.FeignException;
-import feign.RetryableException;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +13,8 @@ import ru.practicum.clients.UserApi;
 import ru.practicum.dto.location.LocationDto;
 import ru.practicum.dto.location.LocationDtoOut;
 import ru.practicum.dto.user.UserDtoOut;
-import ru.practicum.exception.ConditionNotMetException;
-import ru.practicum.exception.DuplicateLocationsException;
-import ru.practicum.exception.NoAccessException;
-import ru.practicum.exception.NotFoundException;
 import ru.practicum.location.dto.*;
+import ru.practicum.location.exception.*;
 import ru.practicum.location.mapper.LocationMapper;
 import ru.practicum.location.model.*;
 import ru.practicum.location.repository.LocationRepository;

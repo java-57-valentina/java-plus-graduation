@@ -1,4 +1,4 @@
-package ru.practicum.exception;
+package ru.practicum.users.exception;
 
 
 public class ForbiddenException extends RuntimeException {
