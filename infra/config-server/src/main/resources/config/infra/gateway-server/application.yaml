@@ -3,16 +3,49 @@ spring:
     gateway:
       discovery.locator.enabled: true
       routes:
-        - id: main_service_route
-          uri: lb://main-service
+        - id: requests_service_route
+          uri: lb://request-service
           predicates:
-            - Path=/**
-          filters:
-            - name: Retry
-              args:
-                retries: 3
-                statuses: BAD_GATEWAY,NOT_FOUND
-                methods: GET
+            - Path=/users/*/requests, /users/*/requests/**, /users/*/events/*/requests,
+
+        - id: user_service_route
+          uri: lb://user-service
+          predicates:
+            - Path=/admin/users, /admin/users/**
+
+        - id: location_service_route
+          uri: lb://location-service
+          predicates:
+            - Path=/admin/locations, /admin/locations/**, /users/*/locations, /users/*/locations/**, /locations
+
+        - id: event_service_route
+          uri: lb://event-service
+          predicates:
+            - Path=/admin/events, /admin/events/**, /users/*/events, /users/*/events/**, /events, /events/**
+
+        - id: category_service_route
+          uri: lb://event-service
+          predicates:
+            - Path=/categories, /categories/**, /admin/categories, /admin/categories/**
+
+        - id: compilation_service_route
+          uri: lb://event-service
+          predicates:
+            - Path=/compilations, /compilations/**, /admin/compilations, /admin/compilations/**
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,gateway,routes"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
 
 server:
   port: 8080

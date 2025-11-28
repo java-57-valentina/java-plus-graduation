@@ -18,4 +18,12 @@ spring:
     username: dbuser
     password: 123456
 
-
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,mappings"
+  endpoint:
+    mappings:
+      enabled: true
